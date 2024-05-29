@@ -45,6 +45,10 @@ from . ui_main import *
 # ///////////////////////////////////////////////////////////////
 from . functions_main_window import *
 
+# 槽函数
+# ///////////////////////////////////////////////////////////////
+from gui.Functions.file_functions import *
+
 # PY WINDOW
 # ///////////////////////////////////////////////////////////////
 class SetupMainWindow:
@@ -320,28 +324,17 @@ class SetupMainWindow:
         self.table_widget.setHorizontalHeaderItem(1, self.column_2)
         self.table_widget.setHorizontalHeaderItem(2, self.column_3)
 
-        for x in range(50):
-            row_number = self.table_widget.rowCount()
-            self.table_widget.insertRow(row_number)  # Insert row
-            self.table_widget.setItem(row_number, 0, QTableWidgetItem(str("Wanderson")))  # Add name
-            self.table_widget.setItem(row_number, 1, QTableWidgetItem(str("vfx_on_fire_" + str(x))))  # Add nick
-            self.pass_text = QTableWidgetItem()
-            self.pass_text.setTextAlignment(Qt.AlignCenter)
-            self.pass_text.setText("12345" + str(x))
-            self.table_widget.setItem(row_number, 2, self.pass_text)  # Add pass
-            self.table_widget.setRowHeight(row_number, 22)
-
-            # 运行按钮
-            self.save_btn = PyPushButton(
-                text="导出",
-                radius=8,
-                color=self.themes["app_color"]["text_foreground"],
-                bg_color=self.themes["app_color"]["dark_one"],
-                bg_color_hover=self.themes["app_color"]["dark_three"],
-                bg_color_pressed=self.themes["app_color"]["dark_four"]
-            )
-            self.save_btn.setMinimumWidth(120)
-            self.save_btn.setMinimumHeight(40)
+        # 运行按钮
+        self.save_btn = PyPushButton(
+            text="导出",
+            radius=8,
+            color=self.themes["app_color"]["text_foreground"],
+            bg_color=self.themes["app_color"]["dark_one"],
+            bg_color_hover=self.themes["app_color"]["dark_three"],
+            bg_color_pressed=self.themes["app_color"]["dark_four"]
+        )
+        self.save_btn.setMinimumWidth(120)
+        self.save_btn.setMinimumHeight(40)
 
         # Label
         self.help_title_label = QLabel('使用手册')
@@ -367,6 +360,16 @@ class SetupMainWindow:
         self.ui.load_pages.table_save_btn_layout.addWidget(self.save_btn, alignment=Qt.AlignRight|Qt.AlignTop)
         self.ui.load_pages.verticalLayout_2.addWidget(self.help_title_label, alignment=Qt.AlignCenter|Qt.AlignTop, stretch=0)
         self.ui.load_pages.verticalLayout_2.addWidget(self.help_text_label,  alignment=Qt.AlignCenter|Qt.AlignTop, stretch=1)
+
+        # 槽函数所需参数
+        caption = '请选择一个文件'
+        directory = './'
+        file_filter = 'Excel文件(*.xlsx *.xls);;所有文件(*.*)'
+        initial_filter = 'Excel文件(*.xls *.xlsx)'
+
+        # 槽函数
+        self.select_file_btn.clicked.connect(lambda: select_file(self, caption, directory, file_filter, initial_filter))
+        self.save_btn.clicked.connect(lambda: save_file(self, caption, directory, file_filter, initial_filter))
 
         # ///////////////////////////////////////////////////////////////
         # END - EXAMPLE CUSTOM WIDGETS
