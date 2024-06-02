@@ -3,7 +3,7 @@
     "version": "v1.0.1",
     "copyright": "By: \u5439\u96ea",
     "year": 2024,
-    "theme_name": "dracula",
+    "theme_name": "lan_bright",
     "custom_title_bar": true,
     "startup_size": [
         1400,
